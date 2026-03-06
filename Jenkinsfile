@@ -1,19 +1,20 @@
 pipeline {
     agent any
     
-    // Task 2: Define a string parameter named PROJECT_NAME
+    // Task 2: Define a numeric parameter named BUILD_ID
     parameters {
-        string(name: 'PROJECT_NAME', defaultValue: 'agileCat', description: 'Enter the project name')
+        string(name: 'BUILD_ID', defaultValue: '101', description: 'Enter the numeric Build ID')
     }
 
     stages {
-        stage('Version 1: String Parameter') {
+        stage('Version 2: Numeric Parameter') {
             steps {
-                // Task 1: Checkout the project from GitHub
+                // Task 1: Checkout the updated repository version
                 checkout scm
                 
-                // Task 3: Display the value of the parameter in the Jenkins console
-                echo "The Project Name parameter is: ${params.PROJECT_NAME}"
+                // Task 3: Save the BUILD_ID value inside buildinfo.txt and read it
+                bat "echo ${params.BUILD_ID} > buildinfo.txt"
+                bat "type buildinfo.txt"
             }
         }
     }
