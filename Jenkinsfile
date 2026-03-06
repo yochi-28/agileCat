@@ -1,20 +1,34 @@
 pipeline {
     agent any
     
-    // Task 2: Define two parameters named APP_NAME and VERSION
     parameters {
-        string(name: 'APP_NAME', defaultValue: 'CatApp', description: 'Enter the Application Name')
-        string(name: 'VERSION', defaultValue: 'v1.0', description: 'Enter the Version Number')
+        string(name: 'PROJECT_NAME', defaultValue: 'agileCat', description: 'Project Name')
+        string(name: 'BUILD_ID', defaultValue: '505', description: 'Numeric Build ID')
+        string(name: 'APP_NAME', defaultValue: 'CatApp', description: 'Application Name')
+        string(name: 'VERSION', defaultValue: 'v2.0', description: 'Version Number')
     }
 
     stages {
-        stage('Version 3: Multiple Parameters') {
+        stage('Version 4: Store All Parameters') {
             steps {
-                // Task 1: Checkout the latest repository version
+                // Task 1: Checkout the latest commit from GitHub
                 checkout scm
                 
-                // Task 3: Display a combined message containing both parameter values
-                echo "Deploying Application: ${params.APP_NAME} | Version: ${params.VERSION}"
+                // Task 2: Display all parameter values in the console output
+                echo "--- Parameter Values ---"
+                echo "Project: ${params.PROJECT_NAME}"
+                echo "Build ID: ${params.BUILD_ID}"
+                echo "App Name: ${params.APP_NAME}"
+                echo "Version: ${params.VERSION}"
+                
+                // Task 3: Store the parameter values inside parameters.txt file
+                bat "echo PROJECT_NAME: ${params.PROJECT_NAME} > parameters.txt"
+                bat "echo BUILD_ID: ${params.BUILD_ID} >> parameters.txt"
+                bat "echo APP_NAME: ${params.APP_NAME} >> parameters.txt"
+                bat "echo VERSION: ${params.VERSION} >> parameters.txt"
+                
+                // Display the file contents to verify
+                bat "type parameters.txt"
             }
         }
     }
