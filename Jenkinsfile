@@ -1,16 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Version 1: Workspace Info') {
+        stage('Version 2: List Workspace and Time') {
             steps {
-                // Task 1: Checkout source code from GitHub
+                // Task 1: Checkout the updated repository
                 checkout scm
                 
-                // Task 2: Display the Jenkins workspace path using %WORKSPACE%
-                bat 'echo The workspace path is: %WORKSPACE%'
+                // Task 2: Use the 'dir' command to list all files and folders
+                bat 'dir'
                 
-                // Task 3: Print a message indicating execution has started
-                echo 'Pipeline execution has started.'
+                // Task 3: Display the current system time using BAT command
+                bat 'echo Current system time: %time%'
             }
         }
     }
